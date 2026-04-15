@@ -1,30 +1,48 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="es">
 <head>
-  <title>Mi Base de Datos</title>
+  <meta charset="UTF-8">
+  <title>Sensor Invernadero</title>
 </head>
 <body>
 
-<h1>Datos desde Supabase</h1>
+<h1>🌱 Datos del Invernadero</h1>
+
+<!-- Botón para cargar datos -->
+
 <button onclick="cargarDatos()">Cargar datos</button>
 
+<!-- Lista donde se mostrarán -->
+
 <ul id="lista"></ul>
+
+<hr>
+
+<h2>Agregar nuevo dato</h2>
+
+<input type="number" id="temp" placeholder="Temperatura">
+<input type="text" id="estado" placeholder="Estado de la tierra">
+<button onclick="agregarDato()">Guardar</button>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <script>
-  const supabaseUrl = "TU_URL";
-  const supabaseKey = "TU_ANON_KEY";
+  // 🔑 Tus datos (los que pasaste)
+  const supabaseUrl = "https://xjmqzdnhactuschmmaaa.supabase.co";
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqbXF6ZG5oYWN0dXNjaG1tYWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNTYyNjcsImV4cCI6MjA5MTgzMjI2N30.93gXgtCxxKLGa0u1gLwzZ94bDkBlhitMX76LKByX7Uc";
 
   const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+  // 📥 Leer datos
   async function cargarDatos() {
     const { data, error } = await supabase
-      .from('alumnos')
-      .select('*');
+      .from('sensores')
+      .select('*')
+      .order('fecha', { ascending: false });
 
     if (error) {
-      console.log(error);
+      console.log("Error:", error);
       return;
     }
 
@@ -33,9 +51,32 @@
 
     data.forEach(item => {
       const li = document.createElement("li");
-      li.textContent = item.nombre + " - " + item.edad;
+      li.textContent = 
+        "🌡️ " + item.temperatura + 
+        "°C | 🌱 " + item.estado_tierra + 
+        " | ⏱️ " + item.fecha;
       lista.appendChild(li);
     });
+  }
+
+  // 📤 Insertar datos
+  async function agregarDato() {
+    const temp = document.getElementById("temp").value;
+    const estado = document.getElementById("estado").value;
+
+    const { error } = await supabase
+      .from('sensores')
+      .insert([
+        { temperatura: temp, estado_tierra: estado }
+      ]);
+
+    if (error) {
+      console.log("Error:", error);
+      return;
+    }
+
+    alert("Dato guardado!");
+    cargarDatos();
   }
 </script>
 
