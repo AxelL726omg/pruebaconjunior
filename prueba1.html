@@ -32,11 +32,11 @@
   const supabaseUrl = "https://xjmqzdnhactuschmmaaa.supabase.co";
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqbXF6ZG5oYWN0dXNjaG1tYWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNTYyNjcsImV4cCI6MjA5MTgzMjI2N30.93gXgtCxxKLGa0u1gLwzZ94bDkBlhitMX76LKByX7Uc";
 
-  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  const supaBase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   // 📥 Leer datos
   async function cargarDatos() {
-    const { data, error } = await supabase
+    const { data, error } = await supaBase
       .from('sensores')
       .select('*')
       .order('fecha', { ascending: false });
@@ -64,7 +64,7 @@
     const temp = document.getElementById("temp").value;
     const estado = document.getElementById("estado").value;
 
-    const { error } = await supabase
+    const { error } = await supaBase
       .from('sensores')
       .insert([
         { temperatura: temp, estado_tierra: estado }
