@@ -8,7 +8,7 @@ const char* password = "TU_PASSWORD";
 const char* serverName = "https://xjmqzdnhactuschmmaaa.supabase.co/rest/v1/sensores";
 
 // API Key (anon)
-const char* apiKey = "TU_API_KEY";
+const char* apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqbXF6ZG5oYWN0dXNjaG1tYWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNTYyNjcsImV4cCI6MjA5MTgzMjI2N30.93gXgtCxxKLGa0u1gLwzZ94bDkBlhitMX76LKByX7Uc";
 
 void setup() {
   Serial.begin(115200);
