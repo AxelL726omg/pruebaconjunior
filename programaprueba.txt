@@ -1,0 +1,40 @@
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+const char* ssid = "TU_WIFI";
+const char* password = "TU_PASSWORD";
+
+const char* serverName = "https://xjmqzdnhactuschmmaaa.supabase.co/rest/v1/sensores";
+
+const char* apiKey = "TU_API_KEY"; // la que te da supabase
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.println("Conectando...");
+  }
+
+  Serial.println("Conectado!");
+
+  HTTPClient http;
+  http.begin(serverName);
+
+  http.addHeader("Content-Type", "application/json");
+  http.addHeader("apikey", apiKey);
+  http.addHeader("Authorization", String("Bearer ") + apiKey);
+
+  String json = "{\"temperatura\": 25.5}";
+
+  int httpResponseCode = http.POST(json);
+
+  Serial.print("Respuesta: ");
+  Serial.println(httpResponseCode);
+
+  http.end();
+}
+
+void loop() {
+}
